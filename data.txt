@@ -1,0 +1,9 @@
+#json-server 구동
+npx json-server --watch ./json-server/db.json --port 8080
+
+#web3.storage 계정
+*dev.changwon@gmail.com
+
+*이미지확인
+https://bafybeicyub34zvhwfeemiag7zjs7yo4zyjaat67oopqck7x2udqjtmjfy4.ipfs.w3s.link/nft.pdf
+
