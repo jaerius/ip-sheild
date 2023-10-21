@@ -1,13 +1,13 @@
 'use client'
-import Layout from "../components/layout";
-
-import jsPDF from "jspdf";					//PDF 생성
-import { Web3Storage , getFilesFromPath } from 'web3.storage'
+import Layout from "../components/layout"
 import { useRouter } from 'next/router'
-
 
 export default function SbtRegForm() {
 	const router = useRouter()
+
+	let today = new Date();  
+	const appDt = today.toLocaleString()
+
 	async function submitForm (e) {
 		e.preventDefault()
 
@@ -68,11 +68,11 @@ export default function SbtRegForm() {
 					  </div>
 					  <div className="w-full">
 						  <label htmlFor="app_dt" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">신청일</label>
-						  <input type="text" name="app_dt" id="app_dt" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="token_id" required="" />
+						  <input type="text" name="app_dt" id="app_dt" value={appDt} readOnly='readOnly' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="신청일" required="true" />
 					  </div>					  					
 					  <div className="w-full">
 						  <label htmlFor="app_no" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">신청번호</label>
-						  <input type="text" name="app_no" id="app_no" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="token_address" required="" />
+						  <input type="text" name="app_no" id="app_no" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="신청번호" required="true" />
 					  </div>
 					  <div>
 						  <label htmlFor="type" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">카테고리</label>
@@ -103,24 +103,24 @@ export default function SbtRegForm() {
 					  </div>					  
 					  <div className="sm:col-span-2">
 						  <label htmlFor="app_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">등록명칭(발명의명칭)</label>
-						  <input type="text" name="app_name" id="app_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="owner_of" required="" />
+						  <input type="text" name="app_name" id="app_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="등록명칭" required="true" />
 					  </div>					
 					  <div className="w-full">
 						  <label htmlFor="owner" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">등록권자(특허권자 , 상표권자 , 디자인권자)</label>
-						  <input type="text" name="owner" id="owner" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="owner_of" required="" />
+						  <input type="text" name="owner" id="owner" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="등록권자" required="" />
 					  </div>	
 					  <div>
 						  <label htmlFor="creater" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">발명자 , 창작자</label>
-						  <input type="text" name="creater" id="creater" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="block_number" required="" />
+						  <input type="text" name="creater" id="creater" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="발명자" required="" />
 					  </div> 
 					  
 					  <div className="w-full">
 						  <label htmlFor="product_info" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">상표를 사용할 상품 , 디자인의 대상이 되는 물품</label>
-						  <input type="text" name="product_info" id="product_info" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="token_uri" required="" />
+						  <input type="text" name="product_info" id="product_info" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="상표를 사용할 상품" required="" />
 					  </div>					  
 					  <div>
 						  <label htmlFor="part_info" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">상표를 사용할 구분</label>
-						  <input type="text" name="part_info" id="part_info" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="synced_at" required="" />
+						  <input type="text" name="part_info" id="part_info" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="상표를 사용할 구분" required="" />
 					  </div> 
 					  <div className="sm:col-span-2">
 						  <label htmlFor="ip_info_01" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">추가적인 정보 01</label>
