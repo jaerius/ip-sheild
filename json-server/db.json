@@ -271,22 +271,6 @@
     },
     {
       "type": "02",
-      "app_no": "ㅎㅎㅎㅎㅎㅎㅎ",
-      "app_dt": "ㅎㅎㅎㅎㅎㅎㅎ",
-      "category": "K",
-      "app_name": "ㅎㅎㅎㅎㅎㅎㅎ",
-      "owner": "ㅎㅎㅎㅎㅎㅎㅎ",
-      "creater": "ㅎㅎㅎㅎㅎㅎㅎ",
-      "product_info": "ㅎㅎㅎㅎㅎㅎㅎ",
-      "part_info": "ㅎㅎㅎㅎㅎㅎㅎ",
-      "ip_info_01": "ㅎㅎㅎㅎㅎㅎㅎ",
-      "ip_info_02": "ㅎㅎㅎㅎㅎㅎㅎ",
-      "ip_info_03": "ㅎㅎㅎㅎㅎㅎㅎ",
-      "id": 3,
-      "token_uri": "https://bafybeidhmk4tz6f3g4xbnxqciy635jsruetdvgp3eehg7f2kzrjz2zblpe.ipfs.w3s.link/sbt.pdf"
-    },
-    {
-      "type": "02",
       "app_no": "상표",
       "app_dt": "상표",
       "category": "N",
@@ -298,7 +282,7 @@
       "ip_info_01": "상표",
       "ip_info_02": "상표\n\n상표",
       "ip_info_03": "상표\n상표\n상표\n상표상표\n",
-      "id": 4,
+      "id": 3,
       "token_uri": "https://bafybeifyikyrnplmsp2zmprlf2cvaw46hbxwglmv42bw4ls6meevm2uehe.ipfs.w3s.link/sbt.pdf"
     },
     {
@@ -314,8 +298,24 @@
       "ip_info_01": "디자인권",
       "ip_info_02": "디자인권",
       "ip_info_03": "디자인권",
-      "id": 5,
+      "id": 4,
       "token_uri": "https://bafybeihtd72akqfsc3oyhrzfoilmcoqoflbh4p4wemwesqxlonegqaj57e.ipfs.w3s.link/sbt.pdf"
+    },
+    {
+      "type": "03",
+      "app_no": "1",
+      "app_dt": "2023. 10. 21. 오후 7:25:35",
+      "category": "default",
+      "app_name": "등록명칭",
+      "owner": "등록권자",
+      "creater": "발명자",
+      "product_info": "디자인",
+      "part_info": "디자인",
+      "ip_info_01": "1",
+      "ip_info_02": "2",
+      "ip_info_03": "3",
+      "id": 5,
+      "token_uri": "https://bafybeickfl57pb5t6cwrk6jo4vnui4gnscr3df6se6blif7hgpdfvz574m.ipfs.w3s.link/sbt.pdf"
     }
   ]
 }

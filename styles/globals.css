@@ -85,3 +85,7 @@ a {
   -webkit-filter: none;
   transition: 0.4s;
 }
+
+/* PDF 미리보기시 불필요한 영역이 보이는거 처리 */
+.react-pdf__Page__textContent{ display: none; }
+.react-pdf__Page__annotations{ display: none; }
