@@ -86,6 +86,15 @@ a {
   transition: 0.4s;
 }
 
+.image {
+    width: 1192px;
+    height: 1684px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border:1px solid black;
+}
+
 /* PDF 미리보기시 불필요한 영역이 보이는거 처리 */
 .react-pdf__Page__textContent{ display: none; }
 .react-pdf__Page__annotations{ display: none; }

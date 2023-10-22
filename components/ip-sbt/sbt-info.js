@@ -92,21 +92,21 @@ export default function SbtInfo({data}){
 			<center>
                 <button type="button" onClick={() => createPdf()} className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">SBT등록</button>
             </center>
-            <div id="sbtInfomation" className="py-8 px-4 mx-auto max-w-2xl lg:py-16">         
-                <div style={{ backgroundImage: `url(/images/sbt/${type}.png)`}}>
-                    <h1>IP SHEILD 방어형 지식재산권</h1>
-                    <h1>{type}</h1>
-                    <h1 className="text-2xl">{app_no}</h1>
-                    <h3 className="mt-4 text-xl">{app_dt}</h3>
-                    <h3 className="mt-4 text-xl">{reg_dt}</h3>
-                    <h3 className="mt-4 text-xl">{app_name}</h3>
-                    <h3 className="mt-4 text-xl">{owner}</h3>
-                    <h3 className="mt-4 text-xl">{creater}</h3>
-                    <h3 className="mt-4 text-xl">{product_info}</h3>
-                    <h3 className="mt-4 text-xl">{part_info}</h3>
-                    <h3 className="mt-4 text-xl">{ip_info_01}</h3>
-                    <h3 className="mt-4 text-xl">{ip_info_02}</h3>
-                    <h3 className="mt-4 text-xl">{ip_info_03}</h3>
+            <div id="sbtInfomation" className="py-8 px-9 mx-auto max-w-7xl max-h-10xl lg:py-16">         
+                <div style={{ backgroundImage: `url(/images/sbt/${type}.png)`}} className='relative image'>
+					<div className='py-80 px-80 mx-auto'>
+						<h3 className="text-xl py-10">{app_no}</h3>
+						<h3 className="text-xl py-10">{app_dt}</h3>
+						<h3 className="text-xl py-10">{app_name}</h3>
+						<h3 className="text-xl py-10">{owner}</h3>
+						<h3 className="text-xl py-10">{creater}</h3>
+						<h3 className="text-xl py-10">{product_info}</h3>
+						<h3 className="text-xl py-10">{part_info}</h3>
+						<h3 className="text-xl py-10">{ip_info_01}</h3>
+						<h3 className="text-xl py-10">{ip_info_02}</h3>
+						<h3 className="text-xl py-10">{ip_info_03}</h3>
+						<h3 className="text-xl py-10">{reg_dt}</h3>
+					</div>
                 </div>
 			</div>
         </div>
