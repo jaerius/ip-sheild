@@ -15,6 +15,8 @@ export default function SbtInfo({data}){
         return new Web3Storage({ token: getAccessToken() })
     }	
       
+	let today = new Date();  
+	const appDt = today.toLocaleString()
 
     const type = data.sbtData.type
     const app_no = data.sbtData.app_no
@@ -95,8 +97,9 @@ export default function SbtInfo({data}){
             <div id="sbtInfomation" className="py-8 px-9 mx-auto max-w-7xl max-h-10xl lg:py-16">         
                 <div style={{ backgroundImage: `url(/images/sbt/${type}.png)`}} className='relative image'>
 					<div className='py-80 px-80 mx-auto'>
-						<h3 className="text-xl py-10">{app_no}</h3>
-						<h3 className="text-xl py-10">{app_dt}</h3>
+						<h3 className="font-bold text-3xl py-10">{app_no}</h3>
+						<h3 className="font-bold text-xl py-10">{app_dt}</h3>
+						<h3 className="font-bold text-xl py-10">{reg_dt}</h3>
 						<h3 className="text-xl py-10">{app_name}</h3>
 						<h3 className="text-xl py-10">{owner}</h3>
 						<h3 className="text-xl py-10">{creater}</h3>
@@ -105,7 +108,7 @@ export default function SbtInfo({data}){
 						<h3 className="text-xl py-10">{ip_info_01}</h3>
 						<h3 className="text-xl py-10">{ip_info_02}</h3>
 						<h3 className="text-xl py-10">{ip_info_03}</h3>
-						<h3 className="text-xl py-10">{reg_dt}</h3>
+						
 					</div>
                 </div>
 			</div>

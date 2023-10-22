@@ -22,7 +22,7 @@ export default function Projects({resData}) {
                     SBT등록
                 </button>                      
 
-                <div className="grid grid-cols-1 gap-8 p-12 m-4 md:grid-cols-4">
+                <div className="grid grid-cols-1 gap-8 p-12 m-4 md:grid-cols-3">
                     {resData.map((list, index) => (
                         <SbtItem data={list} key={index}></SbtItem>
                     ))}
