@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start && npx json-server --watch ./json-server/db.json --port 8080",
+    "start": "next start & npx json-server --watch ./json-server/db.json --port 8080",
     "lint": "next lint"
   },
   "dependencies": {
