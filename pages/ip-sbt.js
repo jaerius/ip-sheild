@@ -37,7 +37,7 @@ export default function Projects({resData}) {
 
 // 각 요청 때마다 호출
 export async function getServerSideProps(context) {
-	const res = await fetch('http://localhost:8080/sbt?_sort=id&_order=desc')
+	const res = await fetch('http://localhost:8080/sbt?complete_yn=true&_sort=id&_order=desc')
     const resData = await res.json()
     
     return {

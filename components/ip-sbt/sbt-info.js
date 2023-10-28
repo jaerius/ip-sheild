@@ -1,10 +1,13 @@
 'use client'
-import { useRef } from 'react';
-import { usePDF } from 'react-to-pdf';
+
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";					//PDF 생성
 import { Web3Storage , getFilesFromPath } from 'web3.storage'
 import { useRouter } from 'next/router'
+import { useState, useCallback } from "react";
+import { ethers } from "ethers";
+
+import ConnectButton from '../elements/ConnectButton';
 
 export default function SbtInfo({data}){
     const router = useRouter()
@@ -31,11 +34,10 @@ export default function SbtInfo({data}){
 	const ip_info_02 = data.sbtData.ip_info_02
 	const ip_info_03 = data.sbtData.ip_info_03    
     const tokenUri = data?.sbtData.token_uri
+	const blockUri = ''
+    const completeYn = ''
 
 	async function createPdf () {
-		//const doc = new jsPDF('p', 'mm', 'a4', true);
-		//const doc = new jsPDF('p', 'pt');
-		
 		const doc = new jsPDF({
 			orientation: "p", // p: 가로(기본), l: 세로
 			unit: "mm", // 단위 : "pt" (points), "mm", "in" or "px" 등)
@@ -61,6 +63,7 @@ export default function SbtInfo({data}){
 		const onRootCidReady = cid => {
 			//cid 구성이 정상일때 DB 수정
 			json.token_uri = "https://"+cid+".ipfs.w3s.link/sbt.pdf"
+			json.complete_yn = "true"
 			const options = {
 				method: "PUT",
 				headers: {
@@ -89,10 +92,104 @@ export default function SbtInfo({data}){
 	}
 	
 
+	const [provider, setProvider] = useState(undefined);
+	const [signer, setSigner] = useState(undefined)
+	const [walletAddress, setWalletAddress] = useState(undefined)
+	const [currentBalance, setCurrentBalance] = useState(undefined)
+	const [chainId, setChainId] = useState(undefined)
+	const [isConnected,setIsConnected] = useState(false)
+  
+	const connectWallet = useCallback(async () => {
+		console.log('connectWallet')
+		try {
+			if(typeof window.ethereum !== 'undefined') {
+				await getMetamaskData();
+				setIsConnected(true);
+			} else {
+				alert("please install MetaMask")
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	},[])
+  
+	const getMetamaskData = async () => {
+		console.log('getMetamaskData')
+		const _provider = await getProvider();
+
+		console.log('_provider : '+JSON.stringify(_provider))
+
+		const _signer = await getSigner(_provider);
+
+		console.log('_signer : '+JSON.stringify(_signer))
+
+		await getWalletData(_signer);
+	}
+  
+	const getProvider = async () => {
+		//console.log('getProvider:'+JSON.stringify(window.ethereum))
+	  	
+		let provider;
+		if (window.ethereum == null) {
+			console.log("MetaMask not installed; using read-only defaults")
+			//provider = ethers.getDefaultProvider()
+			provider = await new ethers.providers.Web3Provider(window.ethereum)
+		} else {
+			provider = new ethers.BrowserProvider(window.ethereum)
+		}
+
+	  	setProvider(provider)  
+	  	return provider;
+	}
+
+	const getSigner = async (provider) => {
+		console.log('getSigner : '+JSON.stringify(provider))
+		await provider.send("eth_requestAccounts", []);
+		const signer = await provider.getSigner();
+		setSigner(signer) 
+	
+		return signer;
+	}
+	
+	const getWalletData = async(signer) => {
+		console.log('getWalletData 0 : '+JSON.stringify(signer))
+		console.log('getWalletData 1 : '+JSON.stringify(signer.provider))
+		console.log('getWalletData 2 : '+signer.address)
+
+		const transaction = await signer.sendTransaction({
+			to: signer.address
+			//value: ethers.utils.parseUnits('0.001', 'ether')
+			//ethers.utils.hexlify(ethers.utils.toUtf8Bytes('<YOUR_STRING>'));
+		}).then((transaction) => {
+			//console.dir(transaction)
+			console.log('transaction :: '+JSON.stringify(transaction))
+			alert("Send finished!")
+		});
+
+		console.log(transaction);
+
+		setTransactionHash(transaction.hash);
+	}
+
     return (
         <div>
 			<center>
                 <button type="button" onClick={() => createPdf()} className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">SBT등록</button>
+				<div className="App">
+					<nav className='nav'>
+						<div className='rightNav'>
+							<div className="connectButtonContainer">
+								<ConnectButton
+									isConnected={isConnected}
+									connectWallet={connectWallet}
+									walletAddress={walletAddress}
+									currentBalance={currentBalance}
+									chainId={chainId}
+								/>
+							</div>
+						</div>
+					</nav>
+				</div>
             </center>
             <div id="sbtInfomation" className="py-8 px-9 mx-auto max-w-7xl max-h-10xl lg:py-16">         
                 <div style={{ backgroundImage: `url(/images/sbt/${type}.png)`}} className='relative image'>

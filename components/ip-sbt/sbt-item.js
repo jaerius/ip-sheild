@@ -27,6 +27,9 @@ export default function SbtItem({data}){
 	const ip_info_02 = data.ip_info_02
 	const ip_info_03 = data.ip_info_03    
     const tokenUri = data?.token_uri
+    const blockUri = ''
+    const completeYn = ''
+    
     return (
         <div className="project-card content-center">
             {/* 생성된 PDF null 체크 */}

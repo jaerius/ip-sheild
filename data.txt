@@ -1,3 +1,7 @@
+#next 구동
+npm run dev
+npm start
+
 #json-server 구동
 npx json-server --watch ./json-server/db.json --port 8080
 
@@ -7,3 +11,10 @@ npx json-server --watch ./json-server/db.json --port 8080
 *이미지확인
 https://bafybeicyub34zvhwfeemiag7zjs7yo4zyjaat67oopqck7x2udqjtmjfy4.ipfs.w3s.link/nft.pdf
 
+
+#git
+https://github.com/dev-chang-won/ip-sheild.git
+
+
+#CONTRACT
+https://goerli.etherscan.io/address/0x9297422EaDCC418d537a804bE7B0eC0eD6cB9C5e

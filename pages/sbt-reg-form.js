@@ -24,6 +24,7 @@ export default function SbtRegForm() {
 			"creater": e.target.creater.value,
 			"product_info": e.target.product_info.value,
 			"part_info": e.target.part_info.value,
+			"complete_yn": false,
 			"ip_info_01": e.target.ip_info_01.value,
 			"ip_info_02": e.target.ip_info_02.value,
 			"ip_info_03": e.target.ip_info_03.value

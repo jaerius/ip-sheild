@@ -250,8 +250,10 @@
       "ip_info_01": "추가정보1",
       "ip_info_02": "추가정보2",
       "ip_info_03": "추가정보3",
-      "id": 9,
-      "token_uri": "https://bafybeid2mfbzwre5t3yqwdwkmaqhbflyv5wgdhgncis6rfcxufpnopva5m.ipfs.w3s.link/sbt.pdf"
+      "id": 1,
+      "token_uri": "https://bafybeid2mfbzwre5t3yqwdwkmaqhbflyv5wgdhgncis6rfcxufpnopva5m.ipfs.w3s.link/sbt.pdf",
+      "block_uri": "",
+      "complete_yn": "true"
     },
     {
       "type": "02",
@@ -266,8 +268,10 @@
       "ip_info_01": "추가정보1",
       "ip_info_02": "추가정보2",
       "ip_info_03": "추가정보3",
-      "id": 10,
-      "token_uri": "https://bafybeifbehar6734pbqh4whsxgrm35omj7wjufn4bi5pejcrina63hflem.ipfs.w3s.link/sbt.pdf"
+      "id": 2,
+      "token_uri": "https://bafybeifbehar6734pbqh4whsxgrm35omj7wjufn4bi5pejcrina63hflem.ipfs.w3s.link/sbt.pdf",
+      "block_uri": "",
+      "complete_yn": "true"
     },
     {
       "type": "03",
@@ -282,8 +286,58 @@
       "ip_info_01": "추가정보1",
       "ip_info_02": "추가정보2",
       "ip_info_03": "추가정보3",
-      "id": 11,
-      "token_uri": "https://bafybeihhu4n2ub36brhnzu2sft372nak22j4vn2rxvbua4ir77ybkqbp5q.ipfs.w3s.link/sbt.pdf"
+      "id": 3,
+      "token_uri": "https://bafybeihhu4n2ub36brhnzu2sft372nak22j4vn2rxvbua4ir77ybkqbp5q.ipfs.w3s.link/sbt.pdf",
+      "block_uri": "",
+      "complete_yn": true
+    },
+    {
+      "type": "02",
+      "app_no": "ㅎㅎ",
+      "app_dt": "2023. 10. 28. 오후 5:15:01",
+      "category": "default",
+      "app_name": "ㅎㅎ",
+      "owner": "ㅎㅎ",
+      "creater": "",
+      "product_info": "",
+      "part_info": "",
+      "complete_yn": false,
+      "ip_info_01": "",
+      "ip_info_02": "",
+      "ip_info_03": "",
+      "id": 4
+    },
+    {
+      "type": "02",
+      "app_no": "ㅁㄴㅇㄹ",
+      "app_dt": "2023. 10. 28. 오후 5:45:30",
+      "category": "default",
+      "app_name": "ㅁㅇㄴㄹ",
+      "owner": "",
+      "creater": "",
+      "product_info": "",
+      "part_info": "",
+      "complete_yn": false,
+      "ip_info_01": "ㅁㄴㅇㄹ",
+      "ip_info_02": "",
+      "ip_info_03": "",
+      "id": 5
+    },
+    {
+      "type": "02",
+      "app_no": "ㅁㄴㅇㄹ",
+      "app_dt": "2023. 10. 28. 오후 10:56:55",
+      "category": "D",
+      "app_name": "ㅁㄴㅇㄹ",
+      "owner": "ㅁㄴㅇㄹ",
+      "creater": "ㅁㄴㅇㄹ",
+      "product_info": "ㅁㄴㅇㄹ",
+      "part_info": "ㅁㄴㅇㄹ",
+      "complete_yn": false,
+      "ip_info_01": "ㅁㄴㄹㅇ",
+      "ip_info_02": "",
+      "ip_info_03": "",
+      "id": 6
     }
   ]
 }
