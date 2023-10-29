@@ -64,6 +64,15 @@
       "reg_id": "system",
       "mod_dttm": "2023-09-05 00:00:00",
       "mod_id": "system"
+    },
+    {
+      "email": "test.test.com",
+      "name": "강호동",
+      "birth": "1982-01-01",
+      "hp": "010-9999-8888",
+      "address": "인천시 남동구 ",
+      "image_src": "",
+      "id": 6
     }
   ],
   "category": [
@@ -234,6 +243,12 @@
       "use_yn": "Y",
       "reg_dttm": "2023-10-05 00:00:00",
       "reg_id": "system"
+    },
+    {
+      "name": "테스트카테고리명",
+      "code": "카테고리코드",
+      "use_yn": "Y",
+      "id": 22
     }
   ],
   "sbt": [
@@ -293,51 +308,53 @@
     },
     {
       "type": "02",
-      "app_no": "ㅎㅎ",
-      "app_dt": "2023. 10. 28. 오후 5:15:01",
-      "category": "default",
-      "app_name": "ㅎㅎ",
-      "owner": "ㅎㅎ",
-      "creater": "",
-      "product_info": "",
-      "part_info": "",
-      "complete_yn": false,
-      "ip_info_01": "",
-      "ip_info_02": "",
-      "ip_info_03": "",
-      "id": 4
+      "app_no": "202301",
+      "app_dt": "2023. 10. 29. 오후 6:21:52",
+      "category": "B",
+      "app_name": "발명",
+      "owner": "등록권자",
+      "creater": "발명자",
+      "product_info": "상표",
+      "part_info": "상표",
+      "complete_yn": "true",
+      "ip_info_01": "1",
+      "ip_info_02": "2",
+      "ip_info_03": "3",
+      "id": 4,
+      "token_uri": "https://bafybeif2mogwm6md74xjacxa2sy3l6e3wgrljijhtmbxfnki2d5jx5gzfq.ipfs.w3s.link/sbt.pdf"
     },
     {
-      "type": "02",
-      "app_no": "ㅁㄴㅇㄹ",
-      "app_dt": "2023. 10. 28. 오후 5:45:30",
-      "category": "default",
-      "app_name": "ㅁㅇㄴㄹ",
-      "owner": "",
-      "creater": "",
-      "product_info": "",
-      "part_info": "",
+      "type": "03",
+      "app_no": "20231029-01",
+      "app_dt": "2023. 10. 29. 오후 6:33:44",
+      "category": "P",
+      "app_name": "좋은디자인",
+      "owner": "디자이너",
+      "creater": "굿디자이너",
+      "product_info": "디자인상품",
+      "part_info": "디자인상표",
       "complete_yn": false,
-      "ip_info_01": "ㅁㄴㅇㄹ",
-      "ip_info_02": "",
-      "ip_info_03": "",
+      "ip_info_01": "추가정보",
+      "ip_info_02": "추가정보2",
+      "ip_info_03": "추가정보3",
       "id": 5
     },
     {
-      "type": "02",
-      "app_no": "ㅁㄴㅇㄹ",
-      "app_dt": "2023. 10. 28. 오후 10:56:55",
-      "category": "D",
-      "app_name": "ㅁㄴㅇㄹ",
-      "owner": "ㅁㄴㅇㄹ",
-      "creater": "ㅁㄴㅇㄹ",
-      "product_info": "ㅁㄴㅇㄹ",
-      "part_info": "ㅁㄴㅇㄹ",
-      "complete_yn": false,
-      "ip_info_01": "ㅁㄴㄹㅇ",
-      "ip_info_02": "",
-      "ip_info_03": "",
-      "id": 6
+      "type": "03",
+      "app_no": "1",
+      "app_dt": "2023. 10. 29. 오후 7:34:55",
+      "category": "B",
+      "app_name": "1",
+      "owner": "1",
+      "creater": "1",
+      "product_info": "1",
+      "part_info": "1",
+      "complete_yn": "true",
+      "ip_info_01": "1",
+      "ip_info_02": "1",
+      "ip_info_03": "1",
+      "id": 6,
+      "token_uri": "https://bafybeiapogtvf6fa56bm22qt5tqh4oo2k7g4l4p7dt44xa5ogu4frglcua.ipfs.w3s.link/sbt.pdf"
     }
   ]
 }

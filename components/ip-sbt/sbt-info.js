@@ -38,6 +38,12 @@ export default function SbtInfo({data}){
     const completeYn = ''
 
 	async function createPdf () {
+
+		if( !isConnected ) {
+			alert('지갑 연결이 필요합니다. ');
+			return 
+		}
+
 		const doc = new jsPDF({
 			orientation: "p", // p: 가로(기본), l: 세로
 			unit: "mm", // 단위 : "pt" (points), "mm", "in" or "px" 등)
@@ -60,20 +66,12 @@ export default function SbtInfo({data}){
 
 	async function setIpfs( files , json ) {
 		// show the root cid as soon as it's ready
+		let ipfsInfo = ''
 		const onRootCidReady = cid => {
-			//cid 구성이 정상일때 DB 수정
-			json.token_uri = "https://"+cid+".ipfs.w3s.link/sbt.pdf"
-			json.complete_yn = "true"
-			const options = {
-				method: "PUT",
-				headers: {
-					'Content-Type': 'application/json; charset=UTF-8'
-				},
-				body: JSON.stringify(json)
-			}
-			fetch('/sbt/'+json.id ,options)
-			router.push('/ip-sbt')
+			ipfsInfo = "https://"+cid+".ipfs.w3s.link/sbt.pdf"
 		}
+
+		console.log(ipfsInfo);
 
 		// when each chunk is stored, update the percentage complete and display
 		const totalSize = files.map(f => f.size).reduce((a, b) => a + b, 0)
@@ -89,8 +87,467 @@ export default function SbtInfo({data}){
 		const client = makeStorageClient()
 
 		client.put(files, { onRootCidReady, onStoredChunk })
+
+		//SBT 발행
+		createSoulBoundToken(ipfsInfo , data.sbtData.id)
 	}
 	
+		
+
+	const createSoulBoundToken = async(ipfsInfo , id) => {
+		let contractAddress = "0x9297422EaDCC418d537a804bE7B0eC0eD6cB9C5e"			//컨트랙트 주소정보
+		console.log('id 0 : '+JSON.stringify(id))
+		console.log('createSoulBoundToken 0 : '+JSON.stringify(signer))
+		console.log('createSoulBoundToken 1 : '+JSON.stringify(signer.provider))
+		console.log('createSoulBoundToken 2 : '+signer.address)
+			
+		// 불러올 컨트랙트 설정
+		const abi = [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_soul",
+						"type": "address"
+					}
+				],
+				"name": "burn",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_soul",
+						"type": "address"
+					},
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "identity",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "url",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "score",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "timestamp",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct soulboundtoken.Soul",
+						"name": "_soulData",
+						"type": "tuple"
+					}
+				],
+				"name": "mint",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_soul",
+						"type": "address"
+					}
+				],
+				"name": "Burn",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_soul",
+						"type": "address"
+					}
+				],
+				"name": "Mint",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_profiler",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_soul",
+						"type": "address"
+					}
+				],
+				"name": "removeProfile",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_profiler",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_soul",
+						"type": "address"
+					}
+				],
+				"name": "RemoveProfile",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_soul",
+						"type": "address"
+					},
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "identity",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "url",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "score",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "timestamp",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct soulboundtoken.Soul",
+						"name": "_soulData",
+						"type": "tuple"
+					}
+				],
+				"name": "setProfile",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_profiler",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_soul",
+						"type": "address"
+					}
+				],
+				"name": "SetProfile",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_soul",
+						"type": "address"
+					},
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "identity",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "url",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "score",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "timestamp",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct soulboundtoken.Soul",
+						"name": "_soulData",
+						"type": "tuple"
+					}
+				],
+				"name": "update",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_soul",
+						"type": "address"
+					}
+				],
+				"name": "Update",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_profiler",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_soul",
+						"type": "address"
+					}
+				],
+				"name": "getProfile",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "identity",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "url",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "score",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "timestamp",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct soulboundtoken.Soul",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_soul",
+						"type": "address"
+					}
+				],
+				"name": "getSoul",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "identity",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "url",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "score",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "timestamp",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct soulboundtoken.Soul",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_profiler",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_soul",
+						"type": "address"
+					}
+				],
+				"name": "hasProfile",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_soul",
+						"type": "address"
+					}
+				],
+				"name": "hasSoul",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_soul",
+						"type": "address"
+					}
+				],
+				"name": "listProfiles",
+				"outputs": [
+					{
+						"internalType": "address[]",
+						"name": "",
+						"type": "address[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "name",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "operator",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "ticker",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		] // Paste your ABI here
+		const contract = new ethers.Contract(contractAddress, abi, signer)
+		console.log('contract::'+JSON.stringify(contract))
+
+		// 컨트랙트 인스턴스를 통해 컨트랙트의 함수를 호출할 수 있다.
+		const result = await contract.mint( signer.addres , ['chang1', 'gggggggg' , 1 , 20231030 ] )
+		//const result = await contract.mint( signer.addres , ['chang1', ipfsInfo , 1 , 20231030 ] )
+		//console.log('result : '+result)
+		console.log('result::'+JSON.stringify(result))
+
+		
+		//cid 구성이 정상일때 DB 수정
+		json.token_uri = ipfsInfo
+		json.complete_yn = "true"
+		const options = {
+			method: "PUT",
+			headers: {
+				'Content-Type': 'application/json; charset=UTF-8'
+			},
+			body: JSON.stringify(json)
+		}
+		fetch('/sbt/'+json.id ,options)
+		router.push('/ip-sbt')
+	}	
 
 	const [provider, setProvider] = useState(undefined);
 	const [signer, setSigner] = useState(undefined)
@@ -109,35 +566,29 @@ export default function SbtInfo({data}){
 				alert("please install MetaMask")
 			}
 		} catch (error) {
-			console.log(error);
+			console.log('connectWallet ERROR : '+error);
 		}
 	},[])
   
 	const getMetamaskData = async () => {
 		console.log('getMetamaskData')
 		const _provider = await getProvider();
-
-		console.log('_provider : '+JSON.stringify(_provider))
-
 		const _signer = await getSigner(_provider);
 
-		console.log('_signer : '+JSON.stringify(_signer))
+		setProvider(_provider)
+		setSigner(_signer)
 
-		await getWalletData(_signer);
+		//await getWalletData(_signer);
 	}
   
 	const getProvider = async () => {
-		//console.log('getProvider:'+JSON.stringify(window.ethereum))
-	  	
 		let provider;
 		if (window.ethereum == null) {
 			console.log("MetaMask not installed; using read-only defaults")
-			//provider = ethers.getDefaultProvider()
 			provider = await new ethers.providers.Web3Provider(window.ethereum)
 		} else {
 			provider = new ethers.BrowserProvider(window.ethereum)
 		}
-
 	  	setProvider(provider)  
 	  	return provider;
 	}
@@ -151,25 +602,445 @@ export default function SbtInfo({data}){
 		return signer;
 	}
 	
-	const getWalletData = async(signer) => {
-		console.log('getWalletData 0 : '+JSON.stringify(signer))
-		console.log('getWalletData 1 : '+JSON.stringify(signer.provider))
-		console.log('getWalletData 2 : '+signer.address)
+	// const getWalletData = async(signer) => {
+	// 	let contractAddress = "0xE0f39832905A26E57ca67d1Bc17A581511108275"
+	// 	console.log('getWalletData 0 : '+JSON.stringify(signer))
+	// 	console.log('getWalletData 1 : '+JSON.stringify(signer.provider))
+	// 	console.log('getWalletData 2 : '+signer.address)
+			
+	// 	// 불러올 컨트랙트 설정
+	// 	const abi = [
+	// 		{
+	// 			"inputs": [
+	// 				{
+	// 					"internalType": "address",
+	// 					"name": "_soul",
+	// 					"type": "address"
+	// 				}
+	// 			],
+	// 			"name": "burn",
+	// 			"outputs": [],
+	// 			"stateMutability": "nonpayable",
+	// 			"type": "function"
+	// 		},
+	// 		{
+	// 			"inputs": [
+	// 				{
+	// 					"internalType": "address",
+	// 					"name": "_soul",
+	// 					"type": "address"
+	// 				},
+	// 				{
+	// 					"components": [
+	// 						{
+	// 							"internalType": "string",
+	// 							"name": "identity",
+	// 							"type": "string"
+	// 						},
+	// 						{
+	// 							"internalType": "string",
+	// 							"name": "url",
+	// 							"type": "string"
+	// 						},
+	// 						{
+	// 							"internalType": "uint256",
+	// 							"name": "score",
+	// 							"type": "uint256"
+	// 						},
+	// 						{
+	// 							"internalType": "uint256",
+	// 							"name": "timestamp",
+	// 							"type": "uint256"
+	// 						}
+	// 					],
+	// 					"internalType": "struct soulboundtoken.Soul",
+	// 					"name": "_soulData",
+	// 					"type": "tuple"
+	// 				}
+	// 			],
+	// 			"name": "mint",
+	// 			"outputs": [],
+	// 			"stateMutability": "nonpayable",
+	// 			"type": "function"
+	// 		},
+	// 		{
+	// 			"inputs": [],
+	// 			"stateMutability": "nonpayable",
+	// 			"type": "constructor"
+	// 		},
+	// 		{
+	// 			"anonymous": false,
+	// 			"inputs": [
+	// 				{
+	// 					"indexed": false,
+	// 					"internalType": "address",
+	// 					"name": "_soul",
+	// 					"type": "address"
+	// 				}
+	// 			],
+	// 			"name": "Burn",
+	// 			"type": "event"
+	// 		},
+	// 		{
+	// 			"anonymous": false,
+	// 			"inputs": [
+	// 				{
+	// 					"indexed": false,
+	// 					"internalType": "address",
+	// 					"name": "_soul",
+	// 					"type": "address"
+	// 				}
+	// 			],
+	// 			"name": "Mint",
+	// 			"type": "event"
+	// 		},
+	// 		{
+	// 			"inputs": [
+	// 				{
+	// 					"internalType": "address",
+	// 					"name": "_profiler",
+	// 					"type": "address"
+	// 				},
+	// 				{
+	// 					"internalType": "address",
+	// 					"name": "_soul",
+	// 					"type": "address"
+	// 				}
+	// 			],
+	// 			"name": "removeProfile",
+	// 			"outputs": [],
+	// 			"stateMutability": "nonpayable",
+	// 			"type": "function"
+	// 		},
+	// 		{
+	// 			"anonymous": false,
+	// 			"inputs": [
+	// 				{
+	// 					"indexed": false,
+	// 					"internalType": "address",
+	// 					"name": "_profiler",
+	// 					"type": "address"
+	// 				},
+	// 				{
+	// 					"indexed": false,
+	// 					"internalType": "address",
+	// 					"name": "_soul",
+	// 					"type": "address"
+	// 				}
+	// 			],
+	// 			"name": "RemoveProfile",
+	// 			"type": "event"
+	// 		},
+	// 		{
+	// 			"inputs": [
+	// 				{
+	// 					"internalType": "address",
+	// 					"name": "_soul",
+	// 					"type": "address"
+	// 				},
+	// 				{
+	// 					"components": [
+	// 						{
+	// 							"internalType": "string",
+	// 							"name": "identity",
+	// 							"type": "string"
+	// 						},
+	// 						{
+	// 							"internalType": "string",
+	// 							"name": "url",
+	// 							"type": "string"
+	// 						},
+	// 						{
+	// 							"internalType": "uint256",
+	// 							"name": "score",
+	// 							"type": "uint256"
+	// 						},
+	// 						{
+	// 							"internalType": "uint256",
+	// 							"name": "timestamp",
+	// 							"type": "uint256"
+	// 						}
+	// 					],
+	// 					"internalType": "struct soulboundtoken.Soul",
+	// 					"name": "_soulData",
+	// 					"type": "tuple"
+	// 				}
+	// 			],
+	// 			"name": "setProfile",
+	// 			"outputs": [],
+	// 			"stateMutability": "nonpayable",
+	// 			"type": "function"
+	// 		},
+	// 		{
+	// 			"anonymous": false,
+	// 			"inputs": [
+	// 				{
+	// 					"indexed": false,
+	// 					"internalType": "address",
+	// 					"name": "_profiler",
+	// 					"type": "address"
+	// 				},
+	// 				{
+	// 					"indexed": false,
+	// 					"internalType": "address",
+	// 					"name": "_soul",
+	// 					"type": "address"
+	// 				}
+	// 			],
+	// 			"name": "SetProfile",
+	// 			"type": "event"
+	// 		},
+	// 		{
+	// 			"inputs": [
+	// 				{
+	// 					"internalType": "address",
+	// 					"name": "_soul",
+	// 					"type": "address"
+	// 				},
+	// 				{
+	// 					"components": [
+	// 						{
+	// 							"internalType": "string",
+	// 							"name": "identity",
+	// 							"type": "string"
+	// 						},
+	// 						{
+	// 							"internalType": "string",
+	// 							"name": "url",
+	// 							"type": "string"
+	// 						},
+	// 						{
+	// 							"internalType": "uint256",
+	// 							"name": "score",
+	// 							"type": "uint256"
+	// 						},
+	// 						{
+	// 							"internalType": "uint256",
+	// 							"name": "timestamp",
+	// 							"type": "uint256"
+	// 						}
+	// 					],
+	// 					"internalType": "struct soulboundtoken.Soul",
+	// 					"name": "_soulData",
+	// 					"type": "tuple"
+	// 				}
+	// 			],
+	// 			"name": "update",
+	// 			"outputs": [],
+	// 			"stateMutability": "nonpayable",
+	// 			"type": "function"
+	// 		},
+	// 		{
+	// 			"anonymous": false,
+	// 			"inputs": [
+	// 				{
+	// 					"indexed": false,
+	// 					"internalType": "address",
+	// 					"name": "_soul",
+	// 					"type": "address"
+	// 				}
+	// 			],
+	// 			"name": "Update",
+	// 			"type": "event"
+	// 		},
+	// 		{
+	// 			"inputs": [
+	// 				{
+	// 					"internalType": "address",
+	// 					"name": "_profiler",
+	// 					"type": "address"
+	// 				},
+	// 				{
+	// 					"internalType": "address",
+	// 					"name": "_soul",
+	// 					"type": "address"
+	// 				}
+	// 			],
+	// 			"name": "getProfile",
+	// 			"outputs": [
+	// 				{
+	// 					"components": [
+	// 						{
+	// 							"internalType": "string",
+	// 							"name": "identity",
+	// 							"type": "string"
+	// 						},
+	// 						{
+	// 							"internalType": "string",
+	// 							"name": "url",
+	// 							"type": "string"
+	// 						},
+	// 						{
+	// 							"internalType": "uint256",
+	// 							"name": "score",
+	// 							"type": "uint256"
+	// 						},
+	// 						{
+	// 							"internalType": "uint256",
+	// 							"name": "timestamp",
+	// 							"type": "uint256"
+	// 						}
+	// 					],
+	// 					"internalType": "struct soulboundtoken.Soul",
+	// 					"name": "",
+	// 					"type": "tuple"
+	// 				}
+	// 			],
+	// 			"stateMutability": "view",
+	// 			"type": "function"
+	// 		},
+	// 		{
+	// 			"inputs": [
+	// 				{
+	// 					"internalType": "address",
+	// 					"name": "_soul",
+	// 					"type": "address"
+	// 				}
+	// 			],
+	// 			"name": "getSoul",
+	// 			"outputs": [
+	// 				{
+	// 					"components": [
+	// 						{
+	// 							"internalType": "string",
+	// 							"name": "identity",
+	// 							"type": "string"
+	// 						},
+	// 						{
+	// 							"internalType": "string",
+	// 							"name": "url",
+	// 							"type": "string"
+	// 						},
+	// 						{
+	// 							"internalType": "uint256",
+	// 							"name": "score",
+	// 							"type": "uint256"
+	// 						},
+	// 						{
+	// 							"internalType": "uint256",
+	// 							"name": "timestamp",
+	// 							"type": "uint256"
+	// 						}
+	// 					],
+	// 					"internalType": "struct soulboundtoken.Soul",
+	// 					"name": "",
+	// 					"type": "tuple"
+	// 				}
+	// 			],
+	// 			"stateMutability": "view",
+	// 			"type": "function"
+	// 		},
+	// 		{
+	// 			"inputs": [
+	// 				{
+	// 					"internalType": "address",
+	// 					"name": "_profiler",
+	// 					"type": "address"
+	// 				},
+	// 				{
+	// 					"internalType": "address",
+	// 					"name": "_soul",
+	// 					"type": "address"
+	// 				}
+	// 			],
+	// 			"name": "hasProfile",
+	// 			"outputs": [
+	// 				{
+	// 					"internalType": "bool",
+	// 					"name": "",
+	// 					"type": "bool"
+	// 				}
+	// 			],
+	// 			"stateMutability": "view",
+	// 			"type": "function"
+	// 		},
+	// 		{
+	// 			"inputs": [
+	// 				{
+	// 					"internalType": "address",
+	// 					"name": "_soul",
+	// 					"type": "address"
+	// 				}
+	// 			],
+	// 			"name": "hasSoul",
+	// 			"outputs": [
+	// 				{
+	// 					"internalType": "bool",
+	// 					"name": "",
+	// 					"type": "bool"
+	// 				}
+	// 			],
+	// 			"stateMutability": "view",
+	// 			"type": "function"
+	// 		},
+	// 		{
+	// 			"inputs": [
+	// 				{
+	// 					"internalType": "address",
+	// 					"name": "_soul",
+	// 					"type": "address"
+	// 				}
+	// 			],
+	// 			"name": "listProfiles",
+	// 			"outputs": [
+	// 				{
+	// 					"internalType": "address[]",
+	// 					"name": "",
+	// 					"type": "address[]"
+	// 				}
+	// 			],
+	// 			"stateMutability": "view",
+	// 			"type": "function"
+	// 		},
+	// 		{
+	// 			"inputs": [],
+	// 			"name": "name",
+	// 			"outputs": [
+	// 				{
+	// 					"internalType": "string",
+	// 					"name": "",
+	// 					"type": "string"
+	// 				}
+	// 			],
+	// 			"stateMutability": "view",
+	// 			"type": "function"
+	// 		},
+	// 		{
+	// 			"inputs": [],
+	// 			"name": "operator",
+	// 			"outputs": [
+	// 				{
+	// 					"internalType": "address",
+	// 					"name": "",
+	// 					"type": "address"
+	// 				}
+	// 			],
+	// 			"stateMutability": "view",
+	// 			"type": "function"
+	// 		},
+	// 		{
+	// 			"inputs": [],
+	// 			"name": "ticker",
+	// 			"outputs": [
+	// 				{
+	// 					"internalType": "string",
+	// 					"name": "",
+	// 					"type": "string"
+	// 				}
+	// 			],
+	// 			"stateMutability": "view",
+	// 			"type": "function"
+	// 		}
+	// 	] // Paste your ABI here
+	// 	const contract = new ethers.Contract(contractAddress, abi, signer)
+	// 	console.log('contract::'+JSON.stringify(contract))
 
-		const transaction = await signer.sendTransaction({
-			to: signer.address
-			//value: ethers.utils.parseUnits('0.001', 'ether')
-			//ethers.utils.hexlify(ethers.utils.toUtf8Bytes('<YOUR_STRING>'));
-		}).then((transaction) => {
-			//console.dir(transaction)
-			console.log('transaction :: '+JSON.stringify(transaction))
-			alert("Send finished!")
-		});
+	// 	// 컨트랙트 인스턴스를 통해 컨트랙트의 함수를 호출할 수 있다.
+	// 	const result = await contract.mint( contractAddress , ["ch1","www,nate.com", 100 , 20231029 ] )
+	// 	console.log('result : '+result)
+	// 	console.log('result::'+JSON.stringify(result))
+	// }
 
-		console.log(transaction);
-
-		setTransactionHash(transaction.hash);
-	}
 
     return (
         <div>
