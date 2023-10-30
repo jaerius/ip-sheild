@@ -15,6 +15,10 @@ export default function SbtItem({data}){
     }
 
     const type = data.type
+    let typeName = ""
+    if( type === '01' ) { typeName = '특허증' }
+    else if( type === '02' ) { typeName = '상표등록증' }
+    else if( type === '03' ) { typeName = '디자인등록증' }
     const app_no = data.app_no
     const app_dt = data.app_dt
     const reg_dt = data.reg_dt
@@ -27,6 +31,9 @@ export default function SbtItem({data}){
 	const ip_info_02 = data.ip_info_02
 	const ip_info_03 = data.ip_info_03    
     const tokenUri = data?.token_uri
+    const blockUri = ''
+    const completeYn = ''
+    
     return (
         <div className="project-card content-center">
             {/* 생성된 PDF null 체크 */}
@@ -38,18 +45,18 @@ export default function SbtItem({data}){
                 </div>                
             )}
             <div className="p-4 flex flex-col">
-                <h1 className="text-2xl">{type}</h1>
+                <h1 className="text-2xl">{typeName}</h1>
                 <h1 className="text-2xl">{app_no}</h1>
-                <h3 className="mt-4 text-xl">{app_dt}</h3>
+                {/* <h3 className="mt-4 text-xl">{app_dt}</h3> */}
 				<h3 className="mt-4 text-xl">{reg_dt}</h3>
 				<h3 className="mt-4 text-xl">{app_name}</h3>
 				<h3 className="mt-4 text-xl">{owner}</h3>
-				<h3 className="mt-4 text-xl">{creater}</h3>
+				{/* <h3 className="mt-4 text-xl">{creater}</h3>
 				<h3 className="mt-4 text-xl">{product_info}</h3>
 				<h3 className="mt-4 text-xl">{part_info}</h3>
 				<h3 className="mt-4 text-xl">{ip_info_01}</h3>
                 <h3 className="mt-4 text-xl">{ip_info_02}</h3>
-                <h3 className="mt-4 text-xl">{ip_info_03}</h3>
+                <h3 className="mt-4 text-xl">{ip_info_03}</h3> */}
             </div>
 
         </div>
