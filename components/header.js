@@ -34,6 +34,9 @@ export default function Header(){
                         <Link href="/ip-sbt">
                             <a className="mr-5 hover:text-gray-900">SBT정보</a>
                         </Link>
+                        <Link href="/login">
+                            <a className="mr-5 hover:text-gray-900">로그인</a>
+                        </Link>
                     </nav>
                     {/* 다크모드 토글 버튼 작업해야함 */}
                     <DarkModeToggleButton/>
