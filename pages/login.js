@@ -20,7 +20,7 @@ export default function Login() {
       const [user] = await response.json();
       if (user&&user.email === email) {
         console.log("로그인 성공");
-        window.location.href = 'http://localhost:3000';
+        router.push('/');
       }else{
         alert('로그인 실패');
         router.push('/login');
